@@ -28,16 +28,17 @@ git config --global init.defaultBranch main
 git config --global --list
 ```
 
-已有本项目时直接进入目录：
+已有 FrameForge AI 项目时，先设置项目目录变量并进入目录（按你的实际保存位置修改）：
 
 ```powershell
-Set-Location "C:\Users\12440\Desktop\code\new\FrameForge AI"
+$projectDir = "C:\path\to\frameforge-ai"
+Set-Location $projectDir
 ```
 
 在一台新电脑上首次取得项目：
 
 ```powershell
-git clone https://github.com/YOUR_GITHUB_USERNAME/frameforge-ai.git
+git clone https://github.com/zhangyanjun888/frameforge-ai.git
 Set-Location .\frameforge-ai
 ```
 
@@ -138,7 +139,8 @@ git ls-remote origin refs/heads/main
 首次启动或源码、依赖、Dockerfile 有变化时：
 
 ```powershell
-Set-Location "C:\Users\12440\Desktop\code\new\FrameForge AI"
+$projectDir = "C:\path\to\frameforge-ai"
+Set-Location $projectDir
 docker compose config --quiet
 docker compose up -d --build
 ```
@@ -228,16 +230,16 @@ docker image ls
 在 GitHub 创建只具有 `write:packages` 权限的 Personal Access Token。登录命令不要直接携带 Token，执行后在提示中粘贴：
 
 ```powershell
-docker login ghcr.io --username 1244026418
+docker login ghcr.io --username zhangyanjun888
 ```
 
 构建和推送：
 
 ```powershell
-docker build -t ghcr.io/1244026418/frameforge-ai-backend:1.0.0 .\backend
-docker tag ghcr.io/1244026418/frameforge-ai-backend:1.0.0 ghcr.io/1244026418/frameforge-ai-backend:latest
-docker push ghcr.io/1244026418/frameforge-ai-backend:1.0.0
-docker push ghcr.io/1244026418/frameforge-ai-backend:latest
+docker build -t ghcr.io/zhangyanjun888/frameforge-ai-backend:1.0.0 .\backend
+docker tag ghcr.io/zhangyanjun888/frameforge-ai-backend:1.0.0 ghcr.io/zhangyanjun888/frameforge-ai-backend:latest
+docker push ghcr.io/zhangyanjun888/frameforge-ai-backend:1.0.0
+docker push ghcr.io/zhangyanjun888/frameforge-ai-backend:latest
 ```
 
 首次发布后，在 GitHub Packages 页面确认包的可见性。若服务器拉取私有包，服务器也需要具有 `read:packages` 权限的登录凭据；公开包则不需要保存拉取密钥。
@@ -259,7 +261,7 @@ git pull --rebase origin main
 docker compose --env-file deploy/.env.production -f docker-compose.prod.yml config --quiet
 docker compose --env-file deploy/.env.production -f docker-compose.prod.yml up -d --build
 docker compose --env-file deploy/.env.production -f docker-compose.prod.yml ps
-python3 deploy/smoke-test.py --base-url https://YOUR_DOMAIN
+python3 deploy/smoke-test.py --base-url https://frameforgeai.online
 ```
 
 先运行 `git status` 是为了避免服务器上未提交的手工改动被覆盖。生产环境的 `deploy/.env.production` 只保存在服务器，不上传 GitHub。

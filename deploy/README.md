@@ -26,16 +26,16 @@ openssl rand -hex 32
 
 编辑 `deploy/.env.production`：
 
-- 将 `DOMAIN` 改成你的真实域名。
+- 将 `DOMAIN` 设置为你的真实域名；当前 FrameForge AI 生产站点使用 `frameforgeai.online`。
 - 域名未备案或尚未解析时，可临时使用 `DOMAIN=http://服务器公网IP`，同时将 `CORS_ALLOWED_ORIGINS` 改成相同地址。
 - 为 `MYSQL_PASSWORD`、`MYSQL_ROOT_PASSWORD`、`REDIS_PASSWORD` 和 `JWT_SECRET` 生成不同的随机值。
 - `DATABASE_URL` 中的 MySQL 用户和密码必须与上面的变量一致。
-- `CORS_ALLOWED_ORIGINS` 改成 `https://你的域名`。
+- `CORS_ALLOWED_ORIGINS` 改成 `https://frameforgeai.online`（如果改用其他域名，则同步替换）。
 - DeepSeek 使用 `AI_BASE_URL=https://api.deepseek.com`、`AI_MODEL=deepseek-v4-flash`；只在服务器私有环境文件中填写新生成的 `AI_API_KEY`。密钥为空时使用 Mock Provider。
 - `LOCAL_ASR_ENABLED=true` 默认在 Worker 中启用 `faster-whisper base/int8`。首次启动会下载约 141 MB 模型到独立 Docker volume，之后复用缓存；模型不会加载到 API 或 MCP。
 - `OCR_ENABLED=true` 默认启用 PaddleOCR `PP-OCRv5_mobile_det/rec`，首次运行下载约 21 MB 模型。ASR 完成后释放 Whisper 模型，再由独立 OCR 子进程执行推理。
 - 4 核 8 GB 建议保持 `LOCAL_ASR_CPU_THREADS=4`、`WORKER_CPU_LIMIT=3.0`、`WORKER_MEMORY_LIMIT=2560m`。2 核机器建议将 CPU limit 改为 `1.5`，并可关闭 OCR 以缩短等待时间。
-- `BILIBILI_IMPORT_ENABLED=true` 时允许通过 BV 号导入公开单视频；默认限制 15 分钟、512 MB、最多重试 3 次。
+- `BILIBILI_IMPORT_ENABLED=true` 时允许通过 BV 号导入公开单视频；默认限制 15 分钟、512 MB、最多重试 3 次。B 站风控或接口变更可能返回 HTTP 412，此时请使用本地视频上传。
 
 大陆服务器访问官方依赖源不稳定时，可以只在生产环境文件中覆盖构建镜像源：
 
@@ -70,7 +70,7 @@ docker compose --env-file deploy/.env.production -f docker-compose.prod.yml logs
 检查服务：
 
 ```bash
-curl https://你的域名/api/health
+curl https://frameforgeai.online/api/health
 ```
 
 浏览器访问 `https://frameforgeai.online`。OpenAPI 文档地址为 `https://frameforgeai.online/api/docs`。如果你使用其他域名，请同步替换 `DOMAIN` 和下面的示例地址。

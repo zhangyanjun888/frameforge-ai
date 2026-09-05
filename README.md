@@ -6,13 +6,13 @@
 - API 健康检查：[https://frameforgeai.online/api/health](https://frameforgeai.online/api/health)
 - MCP Streamable HTTP：`https://frameforgeai.online/mcp`（需要网站用户 Bearer Token）
 
-公网演示环境未配置真实模型和 ASR 密钥时使用 Mock Provider，用于验证完整业务、异步任务和工具调用链路，不代表真实模型准确率。
+未配置真实模型和 ASR 密钥的本地环境会使用 Mock Provider，用于验证完整业务、异步任务和工具调用链路，不代表真实模型准确率。当前 FrameForge AI 生产环境已配置 DeepSeek，可生成真实分析报告；密钥只保存在服务器私有环境文件中。
 
 ## 核心能力
 
 - JWT 登录与用户资源隔离
 - 大文件分片上传、断点查询与 MD5 内容指纹
-- BV 号元数据预览、公开 B 站视频异步导入与来源追踪；预览优先使用官方公开 API，下载保留 `yt-dlp` 并提供 DASH 音视频回退
+- BV 号元数据预览、公开 B 站视频异步导入与来源追踪；预览优先使用官方公开 API，下载保留 `yt-dlp` 并提供 DASH 音视频回退。该能力依赖 B 站公开接口和外部网络，平台风控可能返回 412；本地视频上传是稳定备用路径
 - 分片原子写入、用户级内容去重和上传异常恢复
 - MySQL 持久化与 Redis 重复任务锁
 - RocketMQ 异步分析任务与独立 Worker
@@ -106,7 +106,7 @@ uvicorn frameforge.main:app --reload --port 9090
 
 ## MCP Server 与 Skills
 
-MCP Server 支持远程 Streamable HTTP 和本地 stdio。HTTP 模式直接使用网站登录后获得的 JWT Bearer Token，因此 MCP 只能访问该用户自己的视频。Docker 启动后连接 `http://localhost:8001/mcp`；服务器部署地址为 `https://你的域名/mcp`。
+MCP Server 支持远程 Streamable HTTP 和本地 stdio。HTTP 模式直接使用网站登录后获得的 JWT Bearer Token，因此 MCP 只能访问该用户自己的视频。Docker 启动后连接 `http://localhost:8001/mcp`；FrameForge AI 生产服务器地址为 `https://frameforgeai.online/mcp`。
 
 本地 stdio 模式：
 

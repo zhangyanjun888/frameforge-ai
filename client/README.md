@@ -12,7 +12,7 @@ npm install
 npm run dev
 ```
 
-页面默认运行在 `http://localhost:5173`，后端 API 默认地址为 `http://localhost:9090`。当前页面只开放本地视频上传，链接导入等外部下载能力需要单独完成安全审计后再接入。需要修改 API 地址时，可设置环境变量：
+页面默认运行在 `http://localhost:5173`，后端 API 默认地址为 `http://localhost:9090`。页面支持本地视频上传和 BV 号导入：BV 导入会调用 B 站公开接口并由后端使用 `yt-dlp` 下载，受平台风控或外部网络影响时可能失败，此时可改用本地视频上传。需要修改 API 地址时，可设置环境变量：
 
 ```bash
 VITE_API_BASE_URL=http://localhost:9090

@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "datasetId": "frameforge-heldout-retrieval-v1",
   "status": "FROZEN_HELD_OUT",
-  "sourceAnnotation": "C:\\Users\\12440\\Desktop\\code\\new\\FrameForge AI评测集相关\\FrameForge AI held-out检索评测标注模板.md",
+  "sourceAnnotation": "FrameForge AI held-out 检索评测标注模板（仓库外部评测资料）",
   "description": "FrameForge AI 独立 held-out 视频检索标注；参考答案不参与检索评分。",
   "topK": [
     1,
