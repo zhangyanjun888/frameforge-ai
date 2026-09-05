@@ -36,7 +36,7 @@
     <main class="main-container">
       <section class="hero-section">
         <h1 class="slogan-main"><span>FrameForge</span><strong>AI</strong></h1>
-        <p class="slogan-sub">视频证据工作台</p>
+        <p class="slogan-sub">视频内容理解与证据分析工作台</p>
 
         <div class="source-switch" role="tablist" aria-label="视频来源">
           <button
